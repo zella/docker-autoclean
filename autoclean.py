@@ -15,22 +15,6 @@ def clean_images():
     result = client.images.prune({"dangling": False})
     print(result)
 
-
-# Fire every second.
-@crython.job('safety gloves', second='*', name='Homer Simpson')
-def foo(item, name):
-    import sys
-    try:
-        client = docker.from_env()
-        containers_all = client.containers.list(all=True)
-        print(containers_all)
-        print("Well, I don't need {0}, because I'm {1}. -- Grimey".format(item, name))
-    except:
-        e = sys.exc_info()[0]
-        print(e)
-
-
-
 @crython.job(expr=clean_containers_expr)
 def clean_containers():
     client = docker.from_env()
